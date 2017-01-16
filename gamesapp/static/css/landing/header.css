@@ -27,3 +27,7 @@ header .right-container {
     text-align: right;
     align-self: center;
 }
+
+header .right-container .signup {
+    color: white;
+}

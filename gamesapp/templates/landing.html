@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>WebTech Games</title>
 
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/5.0.0/normalize.css">
 
@@ -21,29 +21,22 @@
 </head>
 <body>
 <div class="popup-blur">
-    <header>
-        <div class="left-container">
-            <div class="logo"><span>WebTech</span> Games</div>
-        </div>
-        <div class="right-container">
-            {% if request.user.is_authenticated %}
-                {{ request.user }}
-            {% else %}
-            <div class="signup"><a class="button green" onclick="showPopup('sign-in')">Sign In</a><a class="button blue"
-                                                                                                     onclick="showPopup('sign-up')">Sign Up</a></div>
-            {% endif %}
-        </div>
-    </header>
+    {% include 'partial/header.html' %}
     <main ng-app="games" ng-controller="gamesController">
         <div class="banner-container" id="banner_container">
             <div class="banner" id="banner"
                  style="background-image: url({% static 'img/landing-background.jpg' %});"></div>
             <div class="banner-content">
                 <div class="splash">
-                    <h1>Want To Track Your Gaming Skills?</h1>
-                    <p>Signing up allows you to record your game activity and highscores. Save your highscores and
-                        compete with others!</p>
-                    <a class="button blue" onclick="showPopup('sign-up')">Sign Up Now</a>
+                    {% if request.user.is_authenticated %}
+                        <h1>Welcome back, {{ request.user }}!</h1>
+                        <p>I bet your friends are beating your highscore. Start playing right away!</p>
+                    {% else %}
+                        <h1>Want To Track Your Gaming Skills?</h1>
+                        <p>Signing up allows you to record your game activity and highscores. Save your highscores and
+                            compete with others!</p>
+                        <a class="button blue" onclick="showPopup('sign-up')">Sign Up Now</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

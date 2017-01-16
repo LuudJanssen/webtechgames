@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{% static 'css/landing/header.css' %}">
     <link rel="stylesheet" href="{% static 'css/landing/main.css' %}">
 
-    <link rel="stylesheet" href="https://i.icomoon.io/public/temp/6b6caf7f8e/webtech-games/style.css">
+    <link rel="stylesheet" href="https://i.icomoon.io/public/temp/ba2894fafa/webtech-games/style.css">
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700|Roboto:100,300,400,500,700,900">
 </head>
@@ -58,15 +58,20 @@
 
         <div class="games">
             <div class="game" ng-repeat="game in games | orderBy: gameSorting">
-                <img class="cover-photo" ng-style="{'background-image': 'url({% static 'games' %}/' + game.game_id + '/banner.png)'}">
+                <img class="cover-photo"
+                     ng-style="{'background-image': 'url({% static 'games' %}/' + game.game_id + '/banner.png)'}">
                 <div class="info">
                     <h2>{% templatetag openvariable %} game.name {% templatetag closevariable %}</h2>
-                    <p class="description">{% templatetag openvariable %} game.description {% templatetag closevariable %}</p>
-                    <div class="highscore"><span>Highscore:</span>{% templatetag openvariable %} game.highscore {% templatetag closevariable %}</div>
+                    <p class="description">{% templatetag openvariable %}
+                        game.description {% templatetag closevariable %}</p>
+                    <div class="highscore"><span>Highscore:</span>{% templatetag openvariable %}
+                        game.highscore {% templatetag closevariable %}</div>
                 </div>
                 <div class="play">
-                    <img class="photo" ng-src="{% static 'games' %}/{% templatetag openvariable %}game.game_id{% templatetag closevariable %}/banner.png">
-                    <a href="#" class="button full-width green">Play Game</a>
+                    <img class="photo"
+                         ng-src="{% static 'games' %}/{% templatetag openvariable %}game.game_id{% templatetag closevariable %}/banner.png">
+                    <a ng-href="/game/{% templatetag openvariable %}game.game_id{% templatetag closevariable %}"
+                       class="button full-width green">Play Game</a>
                 </div>
             </div>
         </div>

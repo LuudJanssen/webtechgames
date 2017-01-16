@@ -1,0 +1,148 @@
+{% load static %}
+{% static "" as baseUrl %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ game.name }}</title>
+
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/5.0.0/normalize.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700|Roboto:100,300,400,500,700,900"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/general.css' %}">
+    <link rel="stylesheet" href="{% static 'css/popup.css' %}">
+    <link rel="stylesheet" href="{% static 'css/game/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/landing/header.css' %}">
+</head>
+
+<body>
+<div class="popup-blur">
+    <div class="navbar">
+        <header>
+            <div class="left-container">
+                <a class="no-link" href="/">
+                    <div class="logo"><span>WebTech</span> Games</div>
+                </a>
+            </div>
+            <div class="right-container">
+                <div class="signup"><a class="button green" onclick="showPopup('sign-in')">Sign In</a><a
+                        class="button blue"
+                        onclick="showPopup('sign-up')">Sign
+                    Up</a></div>
+            </div>
+        </header>
+    </div>
+
+    <div class="image-backdrop" style="background-image: url('{{ baseUrl }}games/{{ game.game_id }}/banner.png')"></div>
+
+    <div class="gameName">
+        <h1>{{ game.name }}</h1>
+    </div>
+
+    <div class="highscores">
+        <h3 class="expPar">Highscores</h3>
+        <hr>
+        <ol class="expPar">
+            {% for highscore in game_highscores %}
+                <li class="highscore-list"><b>{{ highscore.user_id }}: </b>{{ highscore.score }}</li>
+            {% endfor %}
+        </ol>
+    </div>
+
+    <div class="explanation">
+        <h3 class="expPar">Description</h3>
+        <hr>
+        <p class="expPar">{{ game.description }}</p>
+    </div>
+
+    <div class="gamebox" style="background-image: url('{{ baseUrl }}games/{{ game.game_id }}/banner.png')">
+        <iframe class="game" src="{{ baseUrl }}games/{{ game.game_id }}/index.html" width="100%" height="100%"></iframe>
+        <a class="button green centered" onclick="showGame()">Play &#9654</a>
+    </div>
+
+    <div class="graph">
+        <h2 class="">[Insert Username], Your Scores</h2>
+        <div>
+
+        </div>
+
+    </div>
+    <canvas id="highscore_history" class="highscore-history" width="100%" height="300px"
+            style="height: 300px; max-height: 200px"></canvas>
+    <footer>
+        <p class="footer-right"><a class="footer-link" href="#">Back to top</a></p>
+        <p class="footer-left">&copy; 2017 WebTech Games, Inc. &middot; <a class="footer-link"
+                                                                           href="#">Privacy</a> &middot;
+            <a class="footer-link" href="#">Terms</a></p>
+    </footer>
+</div>
+
+<div class="popup-container">
+    <div class="popup popup-sign-in">
+        <h2>Sign in</h2>
+        <form class="login-form" role="form" action="" method="post" enctype="multipart/form-data">
+            <label for="sign_in_email">E-mail</label>
+            <input id="sign_in_email" name="username" placeholder="username">
+            <label for="sign_in_password">Password</label>
+            <input id="sign_in_password" name="password" type="password" placeholder="example">
+            <a class="button green full-width">Sign In!</a>
+        </form>
+    </div>
+    <div class="popup popup-sign-up">
+        <h2>Sign up</h2>
+        <form class="login-form">
+            <label for="sign_up_email">E-mail</label>
+            <input id="sign_up_email" placeholder="example@example.com">
+            <label for="sign_up_password">Password</label>
+            <input id="sign_up_password" type="password" placeholder="example">
+            <label for="sign_up_password_repeat">Repeat Password</label>
+            <input id="sign_up_password_repeat" type="password" placeholder="example">
+            <a class="button blue full-width">Register</a>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+<script src="{% static 'js/popups.js' %}"></script>
+<script>
+    var chartOptions = {
+        type: 'line',
+        data: {
+            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            datasets: [{
+                data: [12, 19, 3, 5, 2, 3],
+                borderColor: "#67ce3f",
+                backgroundColor: "#6fd945",
+                borderWidth: 5
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    display: false
+                }],
+                yAxes: [{
+                    display: false
+                }]
+            },
+            legend: {
+                display: false
+            },
+            maintainAspectRatio: false
+        }
+    };
+
+    var ctx = document.getElementById("highscore_history");
+    var highscoreGraph = new Chart(ctx, chartOptions);
+
+    function showGame() {
+        $('.game').addClass('show');
+        $('.gamebox .button').addClass('hide');
+    }
+</script>
+</body>
+</html>

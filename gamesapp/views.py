@@ -22,12 +22,18 @@ class JSONResponse(HttpResponse):
 
 
 def index(request):
-    all_games = Game.objects.all()
+    return render(request, 'landing.html')
+
+
+def game_view(request, game_id):
+    game = Game.objects.get(game_id=game_id)
+    game_highscores = HighScore.objects.filter(game_id=game_id).order_by('-score')[:10]
     context = {
-        'games': all_games
+        'game': game,
+        'game_highscores': game_highscores
     }
 
-    return render(request, 'landing.html', context)
+    return render(request, 'game.html', context)
 
 
 @api_view(['GET', 'POST'])

@@ -115,6 +115,7 @@
     <p>Your time: <span id="time">0</span>s</p>
     <p>Current play-time: <span id="counter">0</span>s</p>
     <p>Your points: <span id="score">0</span></p>
+    <button class="savescore"> Save current highscore </button>
 </div>
 
 <div id="nameIntro">
@@ -341,6 +342,9 @@
             makeBoxH();
         }
     }
+    function giveScore() {
+        
+    }
 
     function stopMH() {
         document.getElementById("medium").style.visibility = "hidden";
@@ -367,6 +371,9 @@
     document.getElementById("medium").onclick = stopEH;
     //document.getElementById("hard").onclick=makeBoxH;
     document.getElementById("hard").onclick = stopEM;
+    //Push high score to database
+    document.getElementById("savescore").onclick = giveScore();
+    document.getElementById("savescore").onclick = document.location.reload();
 
     function pad(val) {
         return val > 9 ? val : "0" + val;

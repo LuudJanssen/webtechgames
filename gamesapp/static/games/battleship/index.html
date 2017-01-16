@@ -82,6 +82,9 @@
         document.getElementById('gameboard').style.display = "block";
         document.getElementById('scoreBoard').style.display = "block";
     }
+    function giveScore() {
+        
+    }
 
     window.addEventListener("keydown", function (e) {
         // space and arrow keys
@@ -191,8 +194,8 @@
             }
             if (hits == 17) {
                 alert("All enemy battleships have been defeated! You rock!");
-                //document.getElementById('gameboard').style.display = "none";
-                //window.location.reload();
+                giveScore();
+                document.location.reload();
             }
         }
         e.stopPropagation();

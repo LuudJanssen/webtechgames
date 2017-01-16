@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{{ game.name }}</title>
+    <title>WebTech Games - {{ game.name }}</title>
 
     <link rel="stylesheet" href="https://necolas.github.io/normalize.css/5.0.0/normalize.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,300,400,700|Roboto:100,300,400,500,700,900"
@@ -21,19 +21,7 @@
 <body>
 <div class="popup-blur">
     <div class="navbar">
-        <header>
-            <div class="left-container">
-                <a class="no-link" href="/">
-                    <div class="logo"><span>WebTech</span> Games</div>
-                </a>
-            </div>
-            <div class="right-container">
-                <div class="signup"><a class="button green" onclick="showPopup('sign-in')">Sign In</a><a
-                        class="button blue"
-                        onclick="showPopup('sign-up')">Sign
-                    Up</a></div>
-            </div>
-        </header>
+        {% include 'partial/header.html' %}
     </div>
 
     <div class="image-backdrop" style="background-image: url('{{ baseUrl }}games/{{ game.game_id }}/banner.png')"></div>

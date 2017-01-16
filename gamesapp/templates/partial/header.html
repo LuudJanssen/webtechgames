@@ -1,0 +1,16 @@
+<header>
+    <div class="left-container">
+        <a href="/" class="no-link"><div class="logo"><span>WebTech</span> Games</div></a>
+    </div>
+    <div class="right-container">
+        <div class="signup">
+            {% if request.user.is_authenticated %}
+                Welcome, {{ request.user }}!
+            {% else %}
+                <a class="button green" onclick="showPopup('sign-in')">Sign In</a><a
+                    class="button blue"
+                    onclick="showPopup('sign-up')">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+</header>

@@ -26,9 +26,12 @@
             <div class="logo"><span>WebTech</span> Games</div>
         </div>
         <div class="right-container">
+            {% if request.user.is_authenticated %}
+                {{ request.user }}
+            {% else %}
             <div class="signup"><a class="button green" onclick="showPopup('sign-in')">Sign In</a><a class="button blue"
-                                                                                                     onclick="showPopup('sign-up')">Sign
-                Up</a></div>
+                                                                                                     onclick="showPopup('sign-up')">Sign Up</a></div>
+            {% endif %}
         </div>
     </header>
     <main ng-app="games" ng-controller="gamesController">

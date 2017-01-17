@@ -29,7 +29,7 @@
             <div class="banner-content">
                 <div class="splash">
                     {% if request.user.is_authenticated %}
-                        <h1>Welcome back, {{ request.user }}!</h1>
+                        <h1>Welcome back, {{ request.user.first_name }}!</h1>
                         <p>I bet your friends are beating your highscore. Start playing right away!</p>
                     {% else %}
                         <h1>Want To Track Your Gaming Skills?</h1>
@@ -74,30 +74,7 @@
     </main>
 </div>
 
-<div class="popup-container">
-    <div class="popup popup-sign-in">
-        <h2>Sign in</h2>
-        <form class="login-form" role="form" action="" method="post" enctype="multipart/form-data">
-            <label for="sign_in_email">E-mail</label>
-            <input id="sign_in_email" name="username" placeholder="username">
-            <label for="sign_in_password">Password</label>
-            <input id="sign_in_password" name="password" type="password" placeholder="example">
-            <a class="button green full-width">Sign In!</a>
-        </form>
-    </div>
-    <div class="popup popup-sign-up">
-        <h2>Sign up</h2>
-        <form class="login-form">
-            <label for="sign_up_email">E-mail</label>
-            <input id="sign_up_email" placeholder="example@example.com">
-            <label for="sign_up_password">Password</label>
-            <input id="sign_up_password" type="password" placeholder="example">
-            <label for="sign_up_password_repeat">Repeat Password</label>
-            <input id="sign_up_password_repeat" type="password" placeholder="example">
-            <a class="button blue full-width">Register</a>
-        </form>
-    </div>
-</div>
+{% include 'partial/popups.html' %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.js"></script>

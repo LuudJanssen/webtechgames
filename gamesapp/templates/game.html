@@ -47,7 +47,7 @@
     </div>
 
     <div class="gamebox" style="background-image: url('{{ baseUrl }}games/{{ game.game_id }}/banner.png')">
-        <iframe class="game" src="{{ baseUrl }}games/{{ game.game_id }}/index.html" width="100%" height="100%"></iframe>
+        <iframe class="game" src="{{ baseUrl }}games/{{ game.game_id }}/index.html?game_id={{ game.game_id }}&user_id={{ request.user.username }}" width="100%" height="100%"></iframe>
         <a class="button green centered" onclick="showGame()">Play &#9654</a>
     </div>
 
@@ -59,7 +59,7 @@
 
     </div>
     <canvas id="highscore_history" class="highscore-history" width="100%" height="300px"
-            style="height: 300px; max-height: 200px"></canvas>
+            style="height: 300px; max-height: 200px; display: none"></canvas>
     <footer>
         <p class="footer-right"><a class="footer-link" href="#">Back to top</a></p>
         <p class="footer-left">&copy; 2017 WebTech Games, Inc. &middot; <a class="footer-link"
@@ -68,33 +68,11 @@
     </footer>
 </div>
 
-<div class="popup-container">
-    <div class="popup popup-sign-in">
-        <h2>Sign in</h2>
-        <form class="login-form" role="form" action="" method="post" enctype="multipart/form-data">
-            <label for="sign_in_email">E-mail</label>
-            <input id="sign_in_email" name="username" placeholder="username">
-            <label for="sign_in_password">Password</label>
-            <input id="sign_in_password" name="password" type="password" placeholder="example">
-            <a class="button green full-width">Sign In!</a>
-        </form>
-    </div>
-    <div class="popup popup-sign-up">
-        <h2>Sign up</h2>
-        <form class="login-form">
-            <label for="sign_up_email">E-mail</label>
-            <input id="sign_up_email" placeholder="example@example.com">
-            <label for="sign_up_password">Password</label>
-            <input id="sign_up_password" type="password" placeholder="example">
-            <label for="sign_up_password_repeat">Repeat Password</label>
-            <input id="sign_up_password_repeat" type="password" placeholder="example">
-            <a class="button blue full-width">Register</a>
-        </form>
-    </div>
-</div>
+{% include 'partial/popups.html' %}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.bundle.min.js"></script>
+<script src="{% static 'js/api.js' %}"></script>
 <script src="{% static 'js/popups.js' %}"></script>
 <script>
     var chartOptions = {
@@ -131,6 +109,16 @@
         $('.game').addClass('show');
         $('.gamebox .button').addClass('hide');
     }
+
+    var load = 0;
+    $(document).ready(function () {
+        $('.game').on('load', function () {
+            if (load > 0) {
+                location.reload();
+            }
+            load++;
+        });
+    });
 </script>
 </body>
 </html>

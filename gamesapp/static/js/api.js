@@ -1,3 +1,36 @@
+$(document).ready(function () {
+    var getCookie = function (name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    };
+
+    var csrftoken = getCookie('csrftoken');
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+});
+
 function Api(apiRoot, dummy) {
     this.apiRoot = apiRoot;
     this.dummy = dummy || false;
@@ -30,7 +63,19 @@ Api.prototype.getHighscores = function (gameId, userId) {
 };
 
 Api.prototype.setHighscore = function (gameId, userId, highscore) {
-    return this._request('highscore/' + gameId + '/' + userId, 'POST', { highscore: highscore });
+    return this._request('highscores/' + gameId + '/' + userId + '/', 'POST', {score: highscore});
+};
+
+Api.prototype.registerUser = function (data) {
+    return this._request('user/register/', 'POST', data);
+};
+
+Api.prototype.loginUser = function (data) {
+    return this._request('user/login/', 'POST', data);
+};
+
+Api.prototype.logoutUser = function () {
+    return this._request('user/logout/', 'GET');
 };
 
 Api.prototype._request = function (url, method, data) {
@@ -46,7 +91,9 @@ Api.prototype._request = function (url, method, data) {
 Api.prototype._dummyRequest = function (sendBackData) {
     return {
         then: function (fn) {
-            setTimeout(function () {fn(sendBackData)}, 200);
+            setTimeout(function () {
+                fn(sendBackData)
+            }, 200);
         }
     }
 };

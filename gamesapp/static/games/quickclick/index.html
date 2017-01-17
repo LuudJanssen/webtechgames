@@ -12,6 +12,10 @@
             margin: 0px;
         }
 
+        body {
+            background-color: white;
+        }
+
         h1 {
             font-size: 24px;
         }
@@ -115,7 +119,7 @@
     <p>Your time: <span id="time">0</span>s</p>
     <p>Current play-time: <span id="counter">0</span>s</p>
     <p>Your points: <span id="score">0</span></p>
-    <button class="savescore"> Save current highscore </button>
+    <button id="savescore"> Save current highscore</button>
 </div>
 
 <div id="nameIntro">
@@ -125,7 +129,21 @@
 <div id="boxE"></div>
 <div id="boxM"></div>
 <div id="boxH"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+<script src="/static/js/general-functions.js"></script>
+<script src="/static/js/api.js"></script>
 <script>
+    var api = new Api('/api');
+    function giveScore(score) {
+        var query = getQueryParams();
+        score = Math.round(score * 1000);
+        api.setHighscore(query.game_id, query.user_id, score).then(function () {
+            setTimeout(function () {
+                location.reload();
+            }, 500);
+        });
+    }
+
     var clickedTime;
     var createdTime;
     var reactionTime;
@@ -342,9 +360,6 @@
             makeBoxH();
         }
     }
-    function giveScore() {
-        
-    }
 
     function stopMH() {
         document.getElementById("medium").style.visibility = "hidden";
@@ -372,8 +387,9 @@
     //document.getElementById("hard").onclick=makeBoxH;
     document.getElementById("hard").onclick = stopEM;
     //Push high score to database
-    document.getElementById("savescore").onclick = giveScore();
-    document.getElementById("savescore").onclick = document.location.reload();
+    document.getElementById("savescore").onclick = function () {
+        giveScore(highScore[0])
+    };
 
     function pad(val) {
         return val > 9 ? val : "0" + val;

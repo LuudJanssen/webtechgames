@@ -72,7 +72,9 @@
     <p2>Your points: <span id="score">0</span></p2>
 </div>
 <div id="gameboard" style="display:none"></div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+<script src="/static/js/general-functions.js"></script>
+<script src="/static/js/api.js"></script>
 <script>
     var score = [];
     var points = 0;
@@ -82,8 +84,15 @@
         document.getElementById('gameboard').style.display = "block";
         document.getElementById('scoreBoard').style.display = "block";
     }
-    function giveScore() {
-        
+
+    var api = new Api('/api');
+    function giveScore(score) {
+        var query = getQueryParams();
+        api.setHighscore(query.game_id, query.user_id, score).then(function () {
+            setTimeout(function () {
+                location.reload();
+            }, 500);
+        });
     }
 
     window.addEventListener("keydown", function (e) {
@@ -194,8 +203,7 @@
             }
             if (hits == 17) {
                 alert("All enemy battleships have been defeated! You rock!");
-                giveScore();
-                document.location.reload();
+                giveScore(points);
             }
         }
         e.stopPropagation();

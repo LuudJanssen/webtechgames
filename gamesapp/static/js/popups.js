@@ -17,6 +17,42 @@ function preventPopupClosing(event) {
 }
 
 $(document).ready(function () {
+    var api = new Api('/api');
+
     $('.popup-container').click(closePopup);
     $('.popup').click(preventPopupClosing);
+
+    var registerForm = $('#register_form');
+    var loginForm = $('#login_form');
+
+    registerForm.submit(function (event) {
+
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        // Register the user
+        api.registerUser(registerForm.serialize()).then(function (result) {
+            console.log('Registered', result);
+        });
+    });
+
+    loginForm.submit(function (event) {
+
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        // Log the user in
+        api.loginUser(loginForm.serialize()).then(function (result) {
+            closePopup();
+            setTimeout(function () {
+                location.reload();
+            }, 200);
+        });
+    });
+
+    window.logoutUser = function () {
+        api.logoutUser().then(function() {
+            location.reload();
+        });
+    }
 });

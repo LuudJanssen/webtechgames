@@ -35,6 +35,10 @@ div {
     background-color: #2196F3;
 }
 
+.button.red {
+    background-color: #F44336;
+}
+
 .button.full-width {
     display: block;
     box-sizing: border-box;

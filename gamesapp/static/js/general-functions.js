@@ -16,7 +16,7 @@ function getBackgroundImageUrl($element) {
  */
 function loadImage(url) {
     return $('<img />', {
-      src: url
+        src: url
     });
 }
 
@@ -41,4 +41,19 @@ function correctBackgroundBlur($element, $elementContainer) {
     // Let colorThief get the colors and apply them to the element's container
     var colors = colorThief.getColor($imagePlaceholder[0]);
     $elementContainer.css('background-color', 'rgb(' + colors.join() + ')');
+}
+
+function getQueryParams() {
+    qs = document.location.search;
+    qs = qs.split('+').join(' ');
+
+    var params = {},
+        tokens,
+        re = /[?&]?([^=]+)=([^&]*)/g;
+
+    while (tokens = re.exec(qs)) {
+        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+    }
+
+    return params;
 }

@@ -1,0 +1,37 @@
+<div class="popup-container">
+    <div class="popup popup-sign-in">
+        <h2>Sign in</h2>
+        <form class="login-form" id="login_form">
+            {% csrf_token %}
+            <label for="sign_in_username">E-mail</label>
+            <input id="sign_in_username" name="username" placeholder="username">
+
+            <label for="sign_in_password">Password</label>
+            <input id="sign_in_password" name="password" type="password" placeholder="example">
+
+            <a class="button green full-width" onclick="$('#login_form').submit()">Sign In!</a>
+        </form>
+    </div>
+    <div class="popup popup-sign-up">
+        <h2>Sign up</h2>
+        <form class="login-form" id="register_form">
+            {% csrf_token %}
+            <label for="sign_up_first_name">First Name</label>
+            <input id="sign_up_first_name" name="first_name" placeholder="John">
+
+            <label for="sign_up_last_name">Last Name</label>
+            <input id="sign_up_last_name" name="last_name" placeholder="Doe">
+
+            <label for="sign_up_username">Username</label>
+            <input id="sign_up_username" name="username" placeholder="johndoe">
+
+            <label for="sign_up_password">Password</label>
+            <input id="sign_up_password" name="password" type="password" placeholder="example">
+
+            <label for="sign_up_password_repeat">Repeat Password</label>
+            <input id="sign_up_password_repeat" name="password_repeat" type="password" placeholder="example">
+
+            <a class="button blue full-width" onclick="$('#register_form').submit()">Register!</a>
+        </form>
+    </div>
+</div>

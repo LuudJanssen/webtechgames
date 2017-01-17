@@ -5,7 +5,8 @@
     <div class="right-container">
         <div class="signup">
             {% if request.user.is_authenticated %}
-                Welcome, {{ request.user }}!
+                Welcome, {{ request.user.first_name }}!
+                <a class="button red" onclick="logoutUser()">Log Out</a>
             {% else %}
                 <a class="button green" onclick="showPopup('sign-in')">Sign In</a><a
                     class="button blue"

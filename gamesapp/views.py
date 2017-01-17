@@ -1,15 +1,15 @@
 from django.shortcuts import render
-from .models import Game
 from django.http import HttpResponse
 from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from .models import Game, HighScore
 from .serializers import GameSerializer, HighScoreSerializer
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 import logging
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +34,58 @@ def game_view(request, game_id):
     }
 
     return render(request, 'game.html', context)
+
+
+@api_view(['POST'])
+def register_user(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    password_repeat = request.POST['password_repeat']
+    first_name = request.POST['first_name']
+    last_name = request.POST['last_name']
+
+    if password != password_repeat:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    user = User.objects.create(username=username, password=password, first_name=first_name, last_name=last_name)
+    authenticated = authenticate(username=username, password=password)
+
+    if authenticated is None:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    login(request, authenticated)
+    return Response(json.dumps({
+        'username': username,
+        'first_name': first_name,
+        'last_name': last_name
+    }), status=status.HTTP_201_CREATED)
+
+
+@api_view(['POST'])
+def login_user(request):
+    username = request.POST['username']
+    password = request.POST['password']
+
+    authenticated = authenticate(username=username, password=password)
+
+    if authenticated is None:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
+    login(request, authenticated)
+
+    user = User.objects.get(username=username)
+
+    return Response(json.dumps({
+        'username': user.username,
+        'first_name': user.first_name,
+        'last_name': user.last_name
+    }), status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+def logout_user(request):
+    logout(request)
+    return Response(status=status.HTTP_200_OK)
 
 
 @api_view(['GET', 'POST'])

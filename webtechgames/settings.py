@@ -77,18 +77,18 @@ WSGI_APPLICATION = 'webtechgames.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql.connector.django',
-        'NAME': 'webtech_games',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        #'ENGINE': 'mysql.connector.django',
+        #'NAME': 'webtech_games',
+        #'USER': 'root',
+        #'PASSWORD': '',
+        #'HOST': 'localhost',
+        #'PORT': '3306',
 
-        #'ENGINE': 'django.db.backends.mysql',
-        #'NAME': 'luudjanssen$webtechgames',
-        #'USER': 'luudjanssen',
-        #'PASSWORD': 'XxvuNuRkeSKYRKG2rKxCgc6r',
-        #'HOST': 'luudjanssen.mysql.pythonanywhere-services.com',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'luudjanssen$webtechgames',
+        'USER': 'luudjanssen',
+        'PASSWORD': 'XxvuNuRkeSKYRKG2rKxCgc6r',
+        'HOST': 'luudjanssen.mysql.pythonanywhere-services.com',
     }
 }
 

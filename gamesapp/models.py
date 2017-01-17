@@ -3,7 +3,7 @@ from django.utils import timezone
 
 
 class Game(models.Model):
-    game_id = models.TextField(unique=True)
+    game_id = models.CharField(unique=True)
     name = models.TextField()
     description = models.TextField()
     genre = models.TextField()

@@ -51,8 +51,9 @@
         <a class="button green centered" onclick="showGame()">Play &#9654</a>
     </div>
 
+    {% if request.user.is_authenticated %}
     <div class="graph">
-        <h2 class="">[Insert Username], Your Scores</h2>
+        <h2 class="">{{ request.user.first_name }}, Your Scores</h2>
         <div>
 
         </div>
@@ -60,6 +61,7 @@
     </div>
     <canvas id="highscore_history" class="highscore-history" width="100%" height="300px"
             style="height: 300px; max-height: 200px; display: none"></canvas>
+    {% endif %}
     <footer>
         <p class="footer-right"><a class="footer-link" href="#">Back to top</a></p>
         <p class="footer-left">&copy; 2017 WebTech Games, Inc. &middot; <a class="footer-link"

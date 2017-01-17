@@ -1,7 +1,7 @@
 var gamesApp = angular.module('games', []);
 
 gamesApp.controller('gamesController', function ($scope) {
-    var api = new Api('http://127.0.0.1:8000/api');
+    var api = new Api('/api');
     $scope.gameSorting = 'date_added';
 
     // Apply selectFX on all select elements with classes cs-select
